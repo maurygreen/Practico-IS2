@@ -21,3 +21,9 @@ PERSON=(weekend->sleep->(play->PERSON
 							| shop->PERSON)
 		| weekend->sleep->work->PERSON
 ).
+
+VARIABLE(N=2)=VARIABLE[0],
+VARIABLE[i:0..N]=((when(i<N)write[i+1]->VARIABLE[i+1]//CURRENT[i+1]
+			 	  |when(i>0)write[i-1]->VARIABLE[i-1])
+				  | read[i]->VARIABLE[i]).//CURRENT[i-1]),
+//CURRENT[i:0..N]=(read[i]->CURRENT[i]).
