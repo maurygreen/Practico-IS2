@@ -35,37 +35,43 @@ const G=9
 SENSOR=(measure[i:1..G]->PLACE[i]),
 PLACE[i:1..G]=(when(i<2) bajo->SENSOR
 				|when(i>=8) alto->SENSOR
-				|when(8>i>=2) normal->SENSOR).
+				|when(i>=2 && i<8) normal->SENSOR).
 
 //DISPMACH(N=4)=DISPMACH[0],
 //DISPMACH[i:0..N]=(insert[v:0..N)]->DISPMACH[i+v]).
 
+//const MAXFM = 108
+//const MINFM = 88
 //RADIO=OFF,
 //OFF = (on->ON),
 //ON = (off->OFF).
-//46
+
 //DIRECTOR=(open->CONTROL),
 
-DIRECTOR=(open->DIRECTOR
-		|close->DIRECTOR).
-CONTROL=(close->lock->CONTROL
-		|open->unlock->CONTROL).
+DIRECTOR=(open->DIRECTOR2),
+DIRECTOR2=(close->DIRECTOR).
 
-//||CUNT=(DIRECTOR||CONTROL).
+CONTROL=(close->CONTROL1
+		|open->CONTROL2),
+CONTROL1=(lock.east->lock.west->CONTROL),
+CONTROL2=(unlock->CONTROL).
+
+LOCK=(acquire->release->LOCK).
 
 MUSEUMCAP(N=4)=PEOPLE[0],
 PEOPLE[i:0..N]=(when(i<N) arrive->PEOPLE[i+1]
-				|when(i>0) depart->PEOPLE[i-1]).
+				|when(i>0) depart->PEOPLE[i-1]
+                |when(i==0) lock.west->PEOPLE[0]).
 
-EAST=(unlock->RUNE),
+EAST=(unlock.east->RUNE),
 RUNE=(arrive->RUNE
-	  |lock->EAST).
+	  |lock.east->EAST).
 
-WEST=(depart->WEST).
-//WEST=(unlock->RUNW),
-//RUNW=(depart->RUNW
-//	  |lock->WEST).
+//WEST=(depart->WEST).
+WEST=(unlock.west->RUNW),
+RUNW=(depart->RUNW
+	  |lock.west->WEST).
 
-||MUSEUM=(EAST||MUSEUMCAP(4)||DIRECTOR||CONTROL||WEST).//
+||MUSEUM=(EAST||MUSEUMCAP(2)||DIRECTOR||CONTROL||WEST)/{unlock/unlock.{east,west}}.//
 
 //||ALL=(DIRECTOR||EAST||WEST).
