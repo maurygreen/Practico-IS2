@@ -37,14 +37,13 @@ PLACE[i:1..G]=(when(i<2) bajo->SENSOR
 				|when(i>=8) alto->SENSOR
 				|when(i>=2 && i<8) normal->SENSOR).
 
-//DISPMACH(N=4)=DISPMACH[0],
+//DISPMACH(N=30)=DISPMACH[0],
 //DISPMACH[i:0..N]=(insert[v:0..N)]->DISPMACH[i+v]).
 
-//const MAXFM = 108
-//const MINFM = 88
-//RADIO=OFF,
-//OFF = (on->ON),
-//ON = (off->OFF).
+const MAXFM = 108
+const MINFM = 88
+RADIO=(on->RUN),
+RUN=(reset->STATION[MAXFM]),
 
 //DIRECTOR=(open->CONTROL),
 
