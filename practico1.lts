@@ -44,3 +44,28 @@ PLACE[i:1..G]=(when(i<2) bajo->SENSOR
 //OFF = (on->ON),
 //ON = (off->OFF).
 //46
+//DIRECTOR=(open->CONTROL),
+
+DIRECTOR=(open->DIRECTOR
+		|close->DIRECTOR).
+CONTROL=(close->lock->CONTROL
+		|open->unlock->CONTROL).
+
+//||CUNT=(DIRECTOR||CONTROL).
+
+MUSEUMCAP(N=4)=PEOPLE[0],
+PEOPLE[i:0..N]=(when(i<N) arrive->PEOPLE[i+1]
+				|when(i>0) depart->PEOPLE[i-1]).
+
+EAST=(unlock->RUNE),
+RUNE=(arrive->RUNE
+	  |lock->EAST).
+
+WEST=(depart->WEST).
+//WEST=(unlock->RUNW),
+//RUNW=(depart->RUNW
+//	  |lock->WEST).
+
+||MUSEUM=(EAST||MUSEUMCAP(4)||DIRECTOR||CONTROL||WEST).//
+
+//||ALL=(DIRECTOR||EAST||WEST).
