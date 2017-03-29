@@ -1,11 +1,10 @@
-MEETING=(hello->(coverse->(goodbye->STOP))).
+MEETING=(hello->(coverse->(goodbye->STOP))). //Line 1
 
-JOB=(arrive->(wok->(leave->JOB))).
+JOB=(arrive->(wok->(leave->JOB))). //3
 
-//Ask this one!
-//GAME=((one->win
-//      |two->win) ->GAME
-//     |three->(lose->GAME)).
+GAME=({one,two}->GAME2
+     |three->lose->GAME),
+GAME2=(win->GAME).
 
 MOVIE=(ahead->(left->STOP
               |rigth->MOVIE)).
@@ -16,14 +15,32 @@ FOURTICK[i:0..N]=(when(i<N) tick-> FOURTICK[i+1]).
 const H = 3
 DOUBLE=(in[i:1..H]->PLACE[i]),
 PLACE[i:1..H]=(out[i]->DOUBLE).
-
+//18
 PERSON=(weekend->sleep->(play->PERSON
 							| shop->PERSON)
 		| weekend->sleep->work->PERSON
 ).
 
-VARIABLE(N=2)=VARIABLE[0],
-VARIABLE[i:0..N]=((when(i<N)write[i+1]->VARIABLE[i+1]//CURRENT[i+1]
-			 	  |when(i>0)write[i-1]->VARIABLE[i-1])
-				  | read[i]->VARIABLE[i]).//CURRENT[i-1]),
-//CURRENT[i:0..N]=(read[i]->CURRENT[i]).
+const N = 4
+range T = 0..N
+VARIABLE = VARIABLE[0],
+VARIABLE[i:T]=(read[i]->VARIABLE[i]
+				|write[j:T]->VARIABLE[j]).
+//29
+BISTABLE(N=1)=BISTABLE[0],
+BISTABLE[0]=(trigger->BISTABLE[1]),
+BISTABLE[1]=(trigger->BISTABLE[0]).
+//33
+const G=9
+SENSOR=(measure[i:1..G]->PLACE[i]),
+PLACE[i:1..G]=(when(i<2) bajo->SENSOR
+				|when(i>=8) alto->SENSOR
+				|when(8>i>=2) normal->SENSOR).
+
+//DISPMACH(N=4)=DISPMACH[0],
+//DISPMACH[i:0..N]=(insert[v:0..N)]->DISPMACH[i+v]).
+
+//RADIO=OFF,
+//OFF = (on->ON),
+//ON = (off->OFF).
+//46
