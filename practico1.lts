@@ -40,10 +40,10 @@ PLACE[i:1..G]=(when(i<2) bajo->SENSOR
 //DISPMACH(N=30)=DISPMACH[0],
 //DISPMACH[i:0..N]=(insert[v:0..N)]->DISPMACH[i+v]).
 
-const MAXFM = 108
-const MINFM = 88
-RADIO=(on->RUN),
-RUN=(reset->STATION[MAXFM]),
+//const MAXFM = 108
+//const MINFM = 88
+//RADIO=(on->RUN),
+//RUN=(reset->STATION[MAXFM]),
 
 //DIRECTOR=(open->CONTROL),
 
@@ -71,6 +71,41 @@ WEST=(unlock.west->RUNW),
 RUNW=(depart->RUNW
 	  |lock.west->WEST).
 
-||MUSEUM=(EAST||MUSEUMCAP(2)||DIRECTOR||CONTROL||WEST)/{unlock/unlock.{east,west}}.//
+//||MUSEUM=(EAST||MUSEUMCAP(2)||DIRECTOR||CONTROL||WEST)/{unlock/unlock.{east,west}}.//
 
-//||ALL=(DIRECTOR||EAST||WEST).
+ONEBUFF=(put->get->ONEBUFF).
+
+||BUFFER(N=3)=([1..N]:ONEBUFF)/{put/[1].put,
+								[i:2..N].put/[i-1].get,
+								get/[N].get
+								}@{put,get}.
+
+ARM = (pickup->drop->ARM).
+
+PRESS = (input.press->RUN),
+RUN=(press->FINISH),
+FINISH=(release.press->PRESS).
+
+||SOAD = (BUFFER||arm1:ARM||arm2:ARM||PRESS)/{get/arm1.pickup,
+											  input/arm1.drop,
+											  release/arm2.pickup,
+											  finish/arm2.drop}.
+set M={a,b}
+ONEBUFF2=(put[x:M]->get[x]->ONEBUFF2).
+||BUFFER2(N=3)=([1..N]:ONEBUFF2)/{put/[1].put,
+								[i:2..N].put/[i-1].get,
+								get/[N].get
+								}@{put,get}.
+
+ARM1 = (pickup.[x:M]->drop.[x]->ARM1).
+
+DRILL = (input.drill->RUND),
+RUND = (drill->FINISHD),
+FINISHD = (release.drill->DRILL).
+
+||SOAD2 = (BUFFER2||arm1:ARM1||arm2:ARM1||PRESS||DRILL)/{get.[x:M]/arm1.pickup.[x],
+											             input.press/arm1.drop.a,
+														 input.drill/arm1.drop.b,
+											             release.press/arm2.pickup.a,
+											             release.drill/arm2.pickup.b,
+											             finish/arm2.drop.{a,b}}.
