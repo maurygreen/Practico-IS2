@@ -1,0 +1,16 @@
+const S = 3
+const M = 5
+range Int = 0..5
+
+POT(N=0) = SEMA[N],
+SEMA[v:Int] = (when(v==0) fill->SEMA[5]
+			  |when(v>0) eat->SEMA[v-1]
+			  ).
+
+SAVAGE = (eat->SAVAGE).
+
+COOKMAN = (fill->COOKMAN).
+
+||SAVAGES = ([1..S]:SAVAGE).
+
+||TRIBE = (SAVAGES||COOKMAN||POT)/{[1..S].eat/eat}.
