@@ -1,0 +1,12 @@
+const MAXVAL = 1
+range T = 0..MAXVAL
+set VarAlpha = {value.{read[T],write[T]}
+
+VAR = VAR[0],
+VAR[u:T] = (read[u] -> VAR[u]
+		   |write[v:T] -> VAR[u]).
+
+SENDER = (data_out -> INCREASE),
+INCREASE = (value.read[x:T]
+			-> value.write[x+1] -> SENDER)
+		   +VarAlpha.
