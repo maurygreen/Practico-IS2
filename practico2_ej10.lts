@@ -1,0 +1,26 @@
+const NCLI = 4
+set PERSON = {dolape, common}
+
+BARBER = (down -> cut -> up -> BARBER).
+
+SEMAPHORE(N=0)=SEMA[N],
+SEMA[v:0..N]=(up->SEMA[v+1]
+			// |if(v+1==1) then (wakeup->down->SEMA[v+1])
+		     |when(v>0) down-> SEMA[v-1]).
+
+//This is like this for the seats
+CLIENT = (down-> up -> cut -> barber.up -> CLIENT).
+//When a clien stands up, is for getting a hair cut,
+//so he/she no longer needs the seat and frees it.
+||CLIENTS=([1..NCLI]:CLIENT)/{[i:1..NCLI].barber.down/[i].up}.
+||SEMCLI = (CLIENTS||SEMAPHORE(2))/{[1..NCLI].barber.down/up,
+									[1..NCLI].down/down}.
+
+//The barber can only attend to one client at the time
+||BSEM = (BARBER||SEMAPHORE(1))/{barber.down/down,
+								 barber.up/up}.
+
+//Hole system at the moment
+||SYS1 = (BSEM||SEMCLI)/{[1..NCLI].barber.up/barber.up,
+						 [1..NCLI].cut/cut,
+						 [1..NCLI].barber.down/barber.down}.
