@@ -1,0 +1,7 @@
+property SS = (entrar[i:0..1]->recoger[i]->salir[i]->SS).
+
+VECINO = (izar -> mirar -> (entrar -> recoger -> salir -> arriar -> VECINO
+						   |arriar -> VECINO)
+		  ).
+
+||VV = ([i:0..1]:VECINO).

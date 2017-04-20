@@ -1,0 +1,29 @@
+property SS = CC[0],
+CC[i:0..10] = (when(i<10) enter -> CC[i+1]
+			  |when(i>0) exit -> CC[i-1]).
+range T = 0..10
+
+
+MOVE = FLOOR[0],
+FLOOR[i:0..2] = (when(i<2) up -> FLOOR[i+1]
+			   |when(i>0) down -> FLOOR[i-1]).
+
+ASCENSOR = ASER[0],
+ASER[i:T] = (when(i<10)enter -> ASER[i+1]
+			|when(i>0)exit -> ASER[i-1]).
+
+DOOR = (close -> CLOSEADO
+		|enter -> DOOR
+        |exit -> DOOR),
+
+CLOSEADO = (up -> CLOSEADO
+		   |down -> CLOSEADO
+		   |open -> DOOR).
+
+||ASS2 = (MOVE||DOOR).
+
+||ASS = (MOVE||ASCENSOR||DOOR).
+
+||THIS = (ASS2||ASCENSOR).
+
+||DAT = (THIS||SS).
