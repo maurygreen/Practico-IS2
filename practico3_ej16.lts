@@ -1,0 +1,20 @@
+LABERINTH(N=0) = LAB[N],
+LAB[0] = (east -> LAB[1]
+		 |north -> STOP),
+LAB[1] = (west -> LAB[0]
+         |east -> LAB[2]
+		 |south -> LAB[4]),
+LAB[2] = (west -> LAB[1]
+		 |south -> LAB[5]),
+LAB[3] = (east -> LAB[4]
+		 |south -> LAB[6]),
+LAB[4] = (west -> LAB[3]
+		 |north -> LAB[2]),
+LAB[5] = (north -> LAB[2]
+		 |south -> LAB[8]),
+LAB[6] = (north -> LAB[3]),
+LAB[7] = (east -> LAB[8]),
+LAB[8] = (west -> LAB[7]
+		 |north -> LAB[5]).
+
+||TT = (LABERINTH(7)).
