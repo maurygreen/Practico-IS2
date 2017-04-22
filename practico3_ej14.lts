@@ -1,7 +1,23 @@
-property SS = (entrar[i:0..1]->recoger[i]->salir[i]->SS).
+property SS = ([v:1..2].entrar -> [v].recoger -> [v].salir->SS).
 
-VECINO = (izar -> mirar -> (entrar -> recoger -> salir -> arriar -> VECINO
-						   |arriar -> VECINO)
+VECINO = (izar -> mirar -> (read[0] -> entrar -> recoger -> salir -> arriar -> VECINO
+						   |read[1] -> retreat -> arriar -> VECINO)
 		  ).
 
-||VV = ([i:0..1]:VECINO).
+//||VV = ([i:0..1]:VECINO).//{retreat/[0].retreat,
+						  //retreat/[1].retreat}.
+
+FLAG = FLAG[0],
+FLAG[u:0..1] = (read[u] -> FLAG[u]
+              |write[v:0..1] -> FLAG[v])/{izar/write[1],
+										 arriar/write[0]}.
+
+||FLAGS = ([i:1..2]:FLAG).
+
+||HOME1 = ([1]:VECINO)/{[2].read[i:0..1]/[1].read[i]}.
+
+||HOME2 = ([2]:VECINO)/{[1].read[i:0..1]/[2].read[i]}.
+
+||SYS = (HOME1||FLAGS||HOME2).
+
+||SYSC = (SYS||SS).
