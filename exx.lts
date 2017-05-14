@@ -1,0 +1,20 @@
+range T = 1..2
+
+PELUQUERO = (read[0] -> dormir -> SLEEP
+			|read[x:1..4] -> WORK),
+SLEEP = (despertar -> attend[t:T] -> cut -> dispatch -> PELUQUERO),
+WORK = (attend[t:T] -> cut -> dispatch -> PELUQUERO).
+
+||PEL = PELUQUERO.
+
+SILLAS(N=4) = SIL[0][0],
+SIL[x:0..N][y:0..N] = (when(x==0 && y==0) despertar -> attend[1] -> SIL[0][0]
+					  |when(x==0 && y==0) despertar -> attend[2] -> SIL[0][0]
+					  |when(x>0) attend[2] -> SIL[x-1][y]
+					  |when(y>0) attend[1] -> SIL[x][y-1]
+					  |when(x+y<N) arrive[1] -> SIL[x][y+1]
+					  |when(x+y<N) arrive[2] -> SIL[x+1][y]
+					  |read[x+y] -> SIL[x][y]).
+
+||SS = SILLAS.
+||SYS = (SILLAS||PEL).

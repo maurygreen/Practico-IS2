@@ -1,0 +1,13 @@
+FORK = (get -> put -> FORK).
+
+PHIL = (sitdown -> right.get -> left.get ->
+		eat -> right.put -> left.put -> arise -> PHIL).
+
+||DINERS(N=5) = forall[i:0..N-1] (phil[i]:PHIL || {phil[i].left,phil[((i-1)+N)%N].right}::FORK).
+
+BUTLER(N=4) = SEMA[N],
+SEMA[v:0..N] = (arise->SEMA[v+1]
+			   |when(v>0) sitdown->SEMA[v-1]).
+
+||SYS = (BUTLER(4)||DINERS)/{phil.[i:0..4].arise/arise,
+							 phil.[i:0..4].sitdown/sitdown}.

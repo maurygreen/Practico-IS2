@@ -1,0 +1,15 @@
+const N = 3
+ASS = ASIENTO[1],
+ASIENTO[x:0..1] = (read[x] -> ASIENTO[x]
+					|write[u:0..1] -> ASIENTO[u]).
+
+||TY = (asiento[i:1..4]:ASS).
+
+CENTRAL = (asiento[x:1..N].read[i:0..1] -> CENTRAL
+			|asiento[x:1..N].write[i:0..1] -> CENTRAL).
+
+TERMINAL = (asiento[x:1..N].read[0] -> TERMINAL
+		   |asiento[x:1..N].read[1] -> (asiento[x].write[1] -> TERMINAL
+										|asiento[x].write[0] -> TERMINAL)).
+
+||SYS = (CENTRAL||TERMINAL||TY).

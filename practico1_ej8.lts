@@ -1,0 +1,5 @@
+RADIO = (on -> RADI[108]),
+RADI[x:88..108] = (scan -> RAD[x]
+				  |reset -> RADI[108]),
+RAD[x:88..108] = (when(x>88) search -> RAD[x-1]
+				 |synth -> RADI[x]).

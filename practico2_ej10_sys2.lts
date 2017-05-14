@@ -1,0 +1,34 @@
+//Only one barber, attends to common and dolape people. Suffers from starvation
+//for common people. Prioritize dolape people.
+
+const NCLI = 3
+set PERSON = {dolape, common}
+
+BARBER = (down -> cut -> up -> BARBER).
+
+SEMAPHORE(N=0)=SEMA[N],
+SEMA[v:0..N]=(up->SEMA[v+1]
+			// |if(v+1==1) then (wakeup->down->SEMA[v+1])
+		     |when(v>0) down-> SEMA[v-1]).
+
+//This is like this for the seats
+CLIENT = ([x:PERSON].down-> [x].up -> cut -> [x].barber.up -> CLIENT).
+//When a clien stands up, is for getting a hair cut,
+//so he/she no longer needs the seat and frees it.
+||CLIENTS=([1..NCLI]:CLIENT)/{[i:1..NCLI].[x:PERSON].barber.down/[i].[x].up}.
+
+||SEMCLI = (CLIENTS||SEMAPHORE(2))/{[1..NCLI].[x:PERSON].barber.down/up,
+									[1..NCLI].[x:PERSON].down/down}.
+
+//The barber can only attend to one client at the time
+||BSEM = (BARBER||SEMAPHORE(1))/{[x:PERSON].barber.down/down,
+								 [x:PERSON].barber.up/up}.
+
+//Hole system at the moment
+||SYS1 = (BSEM||SEMCLI)/{[1..NCLI].[x:PERSON].barber.up/[x].barber.up,
+						 [1..NCLI].cut/cut,
+						 [1..NCLI].[x:PERSON].barber.down/[x].barber.down}.
+
+||SYS2 = (SYS1) << {[1..NCLI].dolape.barber.down,
+					[1..NCLI].dolape.down
+					[1..NCLI].common.down}.
