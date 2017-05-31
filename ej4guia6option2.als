@@ -41,7 +41,7 @@ pred show[] {}
 run show for 6
 
 assert Acyclic {
-	all x,y: Node | x->y in last[].trans => y->x !in y.^(last[].trans)
+	all x,y: Node | x->y in last[].trans => x !in y.^(last[].trans)
 }
 
 check Acyclic
