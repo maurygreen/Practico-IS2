@@ -1,40 +1,27 @@
-open util/graph[Node] as graph
-open util/ordering[State] as so
+sig Nodo {}
 
-sig Node {e: set Node}
-one sig Root extends Node {}
-
-fact Graph {
-	noSelfLoops[e]
-	stronglyConnected[e] // no lose parts
+sig Grafo {
+	nodos: set Nodo,
+	aristas: nodos -> nodos
 }
 
-sig State {
-	// set of tree nodes in current state
-	graph: set Node,
-	// parent pointers in current state
-	parent: Node -> Node
+pred aciclico[g:Grafo] {
+	no (iden & ^(g.aristas)) 
 }
 
-pred init {
-	let fs = so/first | { fs.tree = Root and no fs.parent }
+pred reflexiva[g:Grafo] {
+	~(g.aristas) in g.aristas
 }
 
-pred explore [pre, post: State] {
-	some x,y : Node | x in pre.graph
-				   and y in x.e
-                        and y->x !in pre.parent
-				   and post.parent = pre.parent + y->x
+pred fconexo[g:Grafo] {
+	g.nodos -> g.nodos = ^(g.aristas)
 }
 
-fact createTree {
-	init
-	all s: State - so/last |
-	let s' = so/next[s] | extend[s,s']
+pred conexo[g:Grafo] {
+	g.nodos -> g.nodos = ^(g.aristas) + ^(~(g.aristas))
 }
 
-pred solveShit[] {
-	!some x,y:Node | x->y in last[].parent and y->x in last[].parent
-}
-
-run solveShit for 5 state
+run aciclico for 5 but 1 Grafo
+run reflexiva for 5 but 1 Grafo
+run fconexo for 5 but 1 Grafo
+run conexo for 2 but 1 Grafo
