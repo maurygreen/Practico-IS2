@@ -1,5 +1,6 @@
-const NCLI = 4
+const NCLI = 2
 set PERSON = {dolape, common}
+set BARBERS = {figaro, mateo}
 
 BARBER = (down -> cut -> up -> BARBER).
 
@@ -9,18 +10,30 @@ SEMA[v:0..N]=(up->SEMA[v+1]
 		     |when(v>0) down-> SEMA[v-1]).
 
 //This is like this for the seats
-CLIENT = (down-> up -> cut -> barber.up -> CLIENT).
+CLIENT = ([v:BARBERS].[x:PERSON].down-> [v].[x].up -> [v].cut -> [v].[x].barber.up -> CLIENT).
 //When a clien stands up, is for getting a hair cut,
 //so he/she no longer needs the seat and frees it.
-||CLIENTS=([1..NCLI]:CLIENT)/{[i:1..NCLI].barber.down/[i].up}.
-||SEMCLI = (CLIENTS||SEMAPHORE(2))/{[1..NCLI].barber.down/up,
-									[1..NCLI].down/down}.
+||CLIENTS=([1..NCLI]:CLIENT)/{[i:1..NCLI].[v:BARBERS].[x:PERSON].barber.down/[i].[v].[x].up}.
+
+||SEMCLI = (CLIENTS||SEMAPHORE(2))/{[1..NCLI].[v:BARBERS].[x:PERSON].barber.down/up,
+									[1..NCLI].[v:BARBERS].[x:PERSON].down/down}.
 
 //The barber can only attend to one client at the time
-||BSEM = (BARBER||SEMAPHORE(1))/{barber.down/down,
-								 barber.up/up}.
+||BSEM1 = (figaro:BARBER||SEMAPHORE(1))/{figaro.[x:PERSON].barber.down/figaro.down,
+										figaro.[x:PERSON].barber.down/down,
+										figaro.[x:PERSON].barber.up/up,
+										figaro.[x:PERSON].barber.up/figaro.up}.
+
+||BSEM2 = (mateo:BARBER||SEMAPHORE(1))/{mateo.[x:PERSON].barber.down/mateo.down,
+										mateo.[x:PERSON].barber.down/down,
+										mateo.[x:PERSON].barber.up/up,
+										mateo.[x:PERSON].barber.up/mateo.up}.
 
 //Hole system at the moment
-||SYS1 = (BSEM||SEMCLI)/{[1..NCLI].barber.up/barber.up,
-						 [1..NCLI].cut/cut,
-						 [1..NCLI].barber.down/barber.down}.
+||SYS1 = (BSEM1||SEMCLI)/{[1..NCLI].[v:BARBERS].[x:PERSON].barber.up/[v].[x].barber.up,
+						 [1..NCLI].[v:BARBERS].cut/[v].cut,
+						 [1..NCLI].[v:BARBERS].[x:PERSON].barber.down/[v].[x].barber.down}.
+
+||SYS2 = (SYS1) << {[1..NCLI].dolape.barber.down,
+					[1..NCLI].dolape.down
+					[1..NCLI].common.down}.
