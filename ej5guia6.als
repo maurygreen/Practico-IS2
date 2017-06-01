@@ -17,7 +17,7 @@ pred transitiva[r:Relacion] {
 pred reflexiva[r:Relacion]{
 	(r.vals -> r.vals)&iden in r.rel
 }
-// ORDEN TOTAL
+// ORDEN PARCIAL
 pred ordenParcial[r:Relacion] {
 	antisimetrica[r]
 	and
@@ -60,19 +60,31 @@ pred ordenEstricto[r:Relacion] {
 }
 
 // TIENE PRIMER ELEMENTO
-pred tienePrimerElem[r:Relacion] {
-	one n: r.vals | (all x: r.vals | x != n and x->n  !in r.rel)
+pred tienePrimerElem[r:Relacion, x:Val] {
+	ordenParcial[r] and
+	all y:r.vals | x->y in r.rel
+}
+
+// TIENE ULTIMO ELEMENTO
+pred tieneUltimoElem[r:Relacion, x:Val] {
+	ordenParcial[r] and
+	all y:r.vals | y->x in r.rel
 }
 
 run preorden for 5 but 1 Relacion
 run ordenParcial for 5 but 1 Relacion
 run ordenTotal for 5 but 1 Relacion
 run ordenEstricto for 5 but 1 Relacion
-run tienePrimerElem for 1 but 1 Relacion
+run tienePrimerElem for 5 but 1 Relacion
+run tieneUltimoElem for 5 but 1 Relacion
 
 // ORDEN PARCIAL => ORDEN TOTAL
 assert parcialistotal {
-	all r:Relacion | ordenParcial[r] => ordenTotal[r]
+	all r:Relacion | ordenParcial[r] implies ordenTotal[r]
+}
+
+assert parcialprimelem {
+	all r:Relacion | ordenParcial[r] implies (one x:Val | tienePrimerElem[r,x])
 }
 
 assert unionestricto {
@@ -85,4 +97,5 @@ assert unionestricto {
 
 check parcialistotal
 check unionestricto
+check parcialprimelem
 //check compestricto
