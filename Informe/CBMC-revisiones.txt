@@ -1,0 +1,248 @@
+========================================================================
+
+REVISOR #1
+
+RESUMEN:
+
+El trabajo presenta una explicación de la herramienta CBMC (C Bounded Model
+Checker). Como sus siglas lo indican, se trata de un Model Checker para
+programas escritos en C y C++. Se trata de presentar la herramienta en sus
+aplicaciones, desempeño y funcionalidad básica, con gráficos explicativos.
+Además se incluye una comparación con otra herramienta similar, y una aplicación
+concreta en un ejemplo simple pero relevante.
+
+EVALUACIÓN:
+
+El trabajo es muy accesible, presenta la herramienta de forma muy transparente
+en su uso y funcionamiento interno. A pesar de unos cuantos errores gramaticales
+y sintácticos, la lectura es fluida e incluso, a veces, un poco repetitiva,
+característica que sirve al objetivo de comprender bien los conceptos
+fundamentales de CBMC.
+Tal vez tenga además alguna incosistencia leve en cuanto a la ordenación del
+texto, como por ejemplo en la sección "Generalidades": si se trató de seguir el
+ciclo de resolución del model checker en 3.1, 3.2 y 3.3, tal vez hubiese sido
+conveniente poner otros subtítulos, y no "Aspectos Técnicos" o "Implementación",
+que no dejan en claro por si solos de qué va a tratar la sub-sección. De todas
+formas no se tratan de errores realmente problemáticos.
+
+
+PUNTOS A FAVOR:
+
+* Lenguaje claro y simple.
+* Cierra con los objetivos planeteados.
+* Acercamiento directo y conciso a CBMC.
+* Interesante comparación con otra herramienta y benchmarks.
+
+PUNTOS EN CONTRA:
+
+// -- Corregidos
+* Errores de ortografia y gramática.
+
+* Comparación con una sola herramienta y falta de explicación de dicha herramienta.
+
+COMENTARIOS DETALLADOS:
+
+
+// ...Arreglado, Nano
+*Pág 4, línea 34-35: "condiciones de borde de arreglos" y "punteros bien
+definidos", son "propiedades que uno siempre desea"?;
+
+// ...Arreglado, Nano
+línea 39: tal vez borrar
+"por" en "comprueban por posibles fallos".
+
+
+PRESENTACIÓN:
+
+3. Adecuada
+
+ESCRITURA TÉCNICA:
+
+3. Adecuado (cumple pero es conveniente mejorar)
+
+ACCESIBILIDAD:
+
+Cualquier informático
+
+========================================================================
+
+REVISOR #2
+
+RESUMEN:
+
+En el trabajo se presenta la herramienta CBMC, luego se presentan los conceptos
+básicos mínimos para entender su flujo, para luego pasar a explicarlo mas
+formalmente en la sección 3. En la sección 3 se hace una breve descripción de
+cada uno de los aspectos mas técnicos, para pasar a la sección 4 donde mas
+detalladamente se explica la comparación con LLBMC (otra herramienta similar).
+También en la sección 4 se muestra el uso de la herramienta con un ejemplo que
+no se muestra en código en el paper, sino en un repositorio que se encuentra
+referenciado en el paper. Finalmente, en el area de conclusiones se vuelve a
+explicar en un párrafo un resumen de que es la herramienta seguido de volver a
+destacar características relevantes de la herramienta.
+
+EVALUACIÓN:
+
+En general se hace una descripción correcta de la herramienta. Hay muchos
+detalles técnicos de escritura explicados y justificados mas abajo que
+mejorarían la comprensión del artículo. En todas las secciones se redunda mucho
+en el hecho de definir y redefinir la herramienta, 4 secciones del artículo
+empiezan con "CBMC es..." y dan definiciones similares y complementarias, quizá
+se podrían juntar y armar una sección bien definida acerca de ¿Que es la
+herramienta? y cual es su objetivo y/o propósito
+
+No creo que el titulo "CBMC - Generalidades", refleje de manera correcta el
+contenido que se abarca en esa sección, de hecho es donde se hace el análisis
+mas exhaustivo y profundo de la herramienta en el artículo. Además dentro de esa
+sección se abordan muchos aspectos de la herramienta, quizá hubiese sido
+agruparlas en 2 secciones con nombres mas claros y acordes a los contenidos que
+se desea explicar. Me inclino por pensar que agregar una sección mas con el
+"flujo de la herramienta", la perspectiva usuario y cosas mas generales, y otra
+con los aspectos técnicos profundos que se abordan es una mejor idea.
+
+Sobre cuestiones notacionales, se introduce notación de golpe sin explicar los
+componentes, aunque si se sigue leyendo es posible entenderlo gracias a las
+fórmulas. En particular en el segundo párrafo de la sección 3 cuando define ,
+nunca se dice el tipo, y se habla de "Relación T", recién se puede entender que
+es en la ecuación 1 y 2. Para alguien no familiarizado con el tema en particular
+podría resultar un problema. Luego se introducen siglas de otros programas sin
+explicarlos
+
+En la sección del caso de uso hubiera sido bueno poder ver algo de código en el
+paper (quizá usando en caso de uso mas pequeño, se pueden encontrar en
+internet), hubiera resultado mas ejemplificativo para entender la dinámica de la
+herramienta. Si se quería incluir ese caso de uso podría haberse incluido de la
+manera que esta o haciendo puramente referencia al repositorio donde se
+encuentra alojado.
+
+En la conclusión se vuelve a definir la herramienta, cosa que parece ya haber
+quedado clara en los párrafos anteriores y no es necesario en una sección de
+este tipo. Esa definición se podría complementar con las otras dadas, como ya
+dije en las secciones del inicio, no hace falta volver a definir la herramienta
+en la conclusión. Mas adelante, se enuncian características destacables de la
+herramienta y algunos inconvenientes, hubiera sido bueno poder ver apreciaciones
+de los autores acerca su experiencia con la herramienta en si misma, o
+cualidades que hayan facilitado comprobar o no su caso de uso.
+
+//---------- Facu cambio el titulo---------------
+Para finalizar creo que el titulo del paper no referencia bien que pasa en el
+mismo, las "ventajas" y "desventajas" de la herramienta ocupan un lugar muy
+remoto del paper y no se las enuncia si quiera como tal, sino que se las destaca
+como características relevantes. Me parece que el titulo o la manera de destacar
+ventajas y desventajas se podrían destacar para lograr una mejor coherencia
+entre titulo y contenido.
+
+Yendo al tema de la
+
+PUNTOS A FAVOR:
+
+1) Exposición simple y concisa de los temas, en ningún momento aburre al lector.
+2) A pesar de lo conciso se logran abordar los temas propuestos.
+
+PUNTOS EN CONTRA:
+
+
+1) Hay redefinición de algunos conceptos (el de la herramienta por ej).
+2) Secciones no se corresponden con el contenido.
+
+COMENTARIOS DETALLADOS:
+
+//--------------agregado
+Sección 3.2) Se intenta enumerar algo pero no se explica que cuando se explica
+el flujo de la figura. Además no se explican todas las transiciones que hay en
+la figura 1 del esquema. (Cuando crashea el SAT solver)
+//------------------- balanceado
+Sección 3.1) Párrafo 2, paréntesis no-balanceados.
+//-------------------sacado de esta seccion
+Sección 3.3) Se vuelve a presentar "Una estructura llamada CFG", cuando fue introducida
+ en la sección Preliminares (2)
+//---- agregados
+Seccion 4) No esta el significado de LLVM y LLBMC se podría explicar mínimamente algo
+ de la herramienta, mas allá de la referencia
+//---------- reformulado.
+Sección 1) En el primer párrafo de la introducción no se entiendo si lo "
+usualmente escrito en un lenguaje de programación como ANSI-C, y su
+implementación en Verilog." no se entiende si es acerca del modelo, o del
+dispositivo.
+
+En la sección 3) ultima linea del primer párrafo se habla de la fase de
+desenrollamiento, es introducida sin explicar que es, aunque se puede inferir,
+pero resulta conveniente que los nombres "propios" de distintas partes de la
+herramienta sean presentadas.
+
+PRESENTACIÓN:
+
+3. Adecuada
+
+ESCRITURA TÉCNICA:
+
+4. Subestándar (va a necesitar trabajo para mejorarlo)
+
+ACCESIBILIDAD:
+
+Alguien con conocimiento de herramientas de análisis y verificación de programas
+
+========================================================================
+
+REVISOR #3
+
+RESUMEN:
+
+El trabajo presenta una herramienta CBMC que implementa técnicas de comprobación
+de modelos, usando model checking acotado (BMC) que transforma los programas de
+C y C++ en un CFG (Grafo de Control de Flujo) este permite obtener todas las
+posibles trazas de un programa durante su ejecución, con lo cual se debe de
+encontrar un camino que lleve a una asercion y construir la formula
+correspondiente a ese camino. Esa formula luego es pasada a un SAT Solver que
+nos dirá si la misma es satisfacible o no.
+
+EVALUACIÓN:
+
+Se destaca una buena inducción del tema a desarrollar, definiendo conceptos
+previos para una mejor compresión de lectura. Si bien se encontraron algunos
+detalles en la redacción y puntuación, el informe en general esta bien
+estructurado.  Con respecto a la sección "Implementacion" y "Fases de
+verificacion" se podría adicionar un ejemplo de como se va pasando de una etapa
+a otra (símil a lo realizado en la presentación) para una mayor visualización de
+lo que hace la herramienta.
+
+PUNTOS A FAVOR:
+
+1- Condensaron bien las características principales de la herramienta.
+2- Se alcanza comprender las contribuciones de la herramienta.
+3- La presentación está relativamente bien organizada.
+
+PUNTOS EN CONTRA:
+
+2-En la conclusión no contiene una no apreciación
+personal de los autores respecto de la herramienta. Alguna parte negativa de la
+herramienta.
+
+3-Las porciones de códigos agregados no tenían comentarios explicativos.
+
+COMENTARIOS DETALLADOS:
+
+
+// ...Esto me parece que no deberíamos agregar
+Pagina 1 - Sección Introduccion: Donde se define como se organiza el documento se sugiere nombrar la sección y dar una breve descripción.
+
+// ...Arreglado, Nano
+Pagina 3 -Sección Implementacion: Error ortografico, acento (multi asignaciones)
+
+// ...Arreglado, Nano
+Pagina 6 - Error de tipeo (suficientos)
+
+// ...Agregue definicion entre parentesis en seccion preliminares, Nano.
+En varias paginas mencionan SAT solver, pero no vi que den una definición de la misma, para aquellos lectores que no estén en el tema.
+
+PRESENTACIÓN:
+
+3. Adecuada
+
+ESCRITURA TÉCNICA:
+
+2. Bueno (puede mejorarse)
+
+ACCESIBILIDAD:
+
+Alguien con conocimiento de herramientas de análisis y verificación de programas
